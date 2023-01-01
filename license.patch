@@ -1,27 +1,27 @@
 diff --git a/domain/src/main/java/org/cryptomator/domain/usecases/DoLicenseCheck.java b/domain/src/main/java/org/cryptomator/domain/usecases/DoLicenseCheck.java
-index dd624e0..bddf986 100644
+index dd624e0..caa8ce9 100644
 --- a/domain/src/main/java/org/cryptomator/domain/usecases/DoLicenseCheck.java
 +++ b/domain/src/main/java/org/cryptomator/domain/usecases/DoLicenseCheck.java
 @@ -43,18 +43,11 @@ public class DoLicenseCheck {
-        }
-
-        public LicenseCheck execute() throws BackendException {
--               license = useLicenseOrRetrieveFromDb(license);
--               try {
--                       final Claims claims = Jwts.parserBuilder().setSigningKey(getPublicKey(ANDROID_PUB_KEY)).build().parseClaimsJws(license).getBody();
--                       return claims::getSubject;
--               } catch (JwtException | FatalBackendException e) {
--                       if (e instanceof SignatureException && isDesktopSupporterCertificate(license)) {
--                               throw new DesktopSupporterCertificateException(license);
-+               return new LicenseCheck() {
-+                       public String mail() {
-+                               return "";
-                        }
--                       throw new LicenseNotValidException(license);
--               } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
--                       throw new FatalBackendException(e);
--               }
-+               };
-        }
-
-        private String useLicenseOrRetrieveFromDb(String license) throws NoLicenseAvailableException {
+ 	}
+ 
+ 	public LicenseCheck execute() throws BackendException {
+-		license = useLicenseOrRetrieveFromDb(license);
+-		try {
+-			final Claims claims = Jwts.parserBuilder().setSigningKey(getPublicKey(ANDROID_PUB_KEY)).build().parseClaimsJws(license).getBody();
+-			return claims::getSubject;
+-		} catch (JwtException | FatalBackendException e) {
+-			if (e instanceof SignatureException && isDesktopSupporterCertificate(license)) {
+-				throw new DesktopSupporterCertificateException(license);
++		return new LicenseCheck() {
++			public String mail() {
++				return "";
+ 			}
+-			throw new LicenseNotValidException(license);
+-		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+-			throw new FatalBackendException(e);
+-		}
++			};
+ 	}
+ 
+ 	private String useLicenseOrRetrieveFromDb(String license) throws NoLicenseAvailableException {
