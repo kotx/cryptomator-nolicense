@@ -3,4 +3,6 @@ Follow the steps in https://github.com/cryptomator/android#building after applyi
 git apply license.patch
 ```
 
-Remember to set the above environment variables in your shell for the actual build.
+Remember to set the attached environment variables in your shell for the actual build.
+
+If you're building release (`assembleApkStore`), you might want to use this tool for signing: https://github.com/patrickfav/uber-apk-signer
